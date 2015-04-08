@@ -6,6 +6,9 @@ class User < ActiveRecord::Base
   
   before_validation :ensure_session_token
   
+  belongs_to :group
+  has_many :owned_groups, class_name: Group, foreign_key: :leader_id
+  
   def self.find_by_credentials(username, password, email)
     user = User.find_by(username: username, email: email)
     return nil if user.nil?
